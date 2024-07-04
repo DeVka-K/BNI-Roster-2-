@@ -1,0 +1,19 @@
+.bg-light-green {
+    background-color: #e8f5e9;
+  }
+  
+  .bg-light-yellow {
+    background-color: #fff9c4;
+  }
+  
+  .bg-light-purple {
+    background-color: #e8eaf6;
+  }
+  
+  .card {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px);
+  }
