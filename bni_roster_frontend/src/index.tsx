@@ -5,6 +5,8 @@ import App from './App';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { BrowserRouter } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 const root = ReactDOM.createRoot(
@@ -12,9 +14,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+  
     <BrowserRouter>
     <App />
     </BrowserRouter>
+ 
   </React.StrictMode>
 );
 
