@@ -1,13 +1,16 @@
 import React from 'react';
-import './App.css';
-import { Route, Routes } from 'react-router-dom';
-import HomePage from "./Pages/HomePage/HomePage";
+// import SignUp from './Pages/signup';
+// import LoginPage from './Pages/LoginPage';
+import FormToPDF from './Components/FormToPDF';
+import { Route,Routes } from 'react-router-dom';
+import HomePage from './Pages/HomePage/HomePage';
+
 import CsvToPdf from './Components/CsvtoPdf';
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import JsontoPdf from './Components/JsontoPdf';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className="App">
       <Header></Header>
@@ -15,6 +18,7 @@ function App() {
       <Route path="/" element={<HomePage/>}/>
         <Route path="/json-to-pdf"    element={<JsontoPdf/>}/>
       <Route path="/csv-to-pdf" element={<CsvToPdf/>}/>
+      <Route path="/form-to-pdf" element={<FormToPDF/>}/>
       </Routes>
       <Footer></Footer>
     </div>
@@ -22,3 +26,5 @@ function App() {
 }
 
 export default App;
+
+
