@@ -30,7 +30,7 @@ const JsontoPdf: React.FC = () => {
     event.currentTarget.classList.remove('drag-over');
   };
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => { 
     event.preventDefault();
     event.currentTarget.classList.remove('drag-over');
     const droppedFile = event.dataTransfer.files[0];
