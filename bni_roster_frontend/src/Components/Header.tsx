@@ -18,15 +18,14 @@ const App: React.FC = () => {
   return (
     <MDBNavbar expand='lg' light bgColor='light'>
       <MDBContainer fluid>
-        {/* <MDBNavbarBrand href='#'>Navbar</MDBNavbarBrand> */}
         <MDBNavbarBrand href='#'>
-            <img
-              src='https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.webp'
-              height='30'
-              alt=''
-              loading='lazy'
-            />
-          </MDBNavbarBrand>
+          <img
+            src='https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.webp'
+            height='30'
+            alt=''
+            loading='lazy'
+          />
+        </MDBNavbarBrand>
         <MDBNavbarToggler
           aria-expanded='false'
           aria-label='Toggle navigation'
@@ -35,7 +34,7 @@ const App: React.FC = () => {
           <MDBIcon icon='bars' fas />
         </MDBNavbarToggler>
         <MDBCollapse navbar open={openNavSecond}>
-          <MDBNavbarNav>
+          <MDBNavbarNav className='me-auto'>
             <MDBNavbarItem>
               <MDBNavbarLink active aria-current='page' href='#'>
                 Home
@@ -47,15 +46,10 @@ const App: React.FC = () => {
             <MDBNavbarItem>
               <MDBNavbarLink href='#'>Pricing</MDBNavbarLink>
             </MDBNavbarItem>
-            <MDBNavbarItem>
-            <MDBBtn outline color="success" className='me-2' type='button'>
-          Main button
-        </MDBBtn>
-              {/* <MDBNavbarLink disabled href='#' tabIndex={-1} aria-disabled='true'>
-                Disabled
-              </MDBNavbarLink> */}
-            </MDBNavbarItem>
           </MDBNavbarNav>
+          <MDBBtn outline color="success" className='ms-3' type='button'>
+            Main button
+          </MDBBtn>
         </MDBCollapse>
       </MDBContainer>
     </MDBNavbar>
