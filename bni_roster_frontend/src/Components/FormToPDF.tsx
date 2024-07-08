@@ -115,23 +115,58 @@ const FormToPDF: React.FC = () => {
     }
   };
 
+  // const handleGeneratePDF = async () => {
+  //   const element = document.getElementById('preview-container');
+  //   if (element) {
+  //     const canvas = await html2canvas(element);
+  //     const data = canvas.toDataURL('image/png');
+
+  //     const pdf = new jsPDF();
+  //     const imgProperties = pdf.getImageProperties(data);
+  //     const pdfWidth = pdf.internal.pageSize.getWidth();
+  //     const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
+
+  //     pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
+  //     pdf.save('bni_roster.pdf');
+
+  //     // Send data to backend
+  //     try {
+  //       await axios.post('http://localhost:4000/pdf/generate', {
+  //         chapterName,
+  //         location,
+  //         memberSize,
+  //         regionalRank,
+  //         allIndiaRank,
+  //         globalRank,
+  //         members
+  //       });
+  //       console.log('PDF data sent to backend');
+  //     } catch (error) {
+  //       console.error('Error sending PDF data to backend:', error);
+  //     }
+  //   }
+  // };
   const handleGeneratePDF = async () => {
     const element = document.getElementById('preview-container');
     if (element) {
-      const canvas = await html2canvas(element);
-      const data = canvas.toDataURL('image/png');
-
-      const pdf = new jsPDF();
-      const imgProperties = pdf.getImageProperties(data);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
-
-      pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pages = element.querySelectorAll('.page');
+      
+      for (let i = 0; i < pages.length; i++) {
+        const page = pages[i] as HTMLElement;
+        const canvas = await html2canvas(page, {scale: 2});
+        const imgData = canvas.toDataURL('image/png');
+        
+        if (i > 0) pdf.addPage();
+        
+        pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+      }
+      
       pdf.save('bni_roster.pdf');
-
+  
       // Send data to backend
       try {
-        await axios.post('http://localhost:3000/api/generate-pdf', {
+        await axios.post('http://localhost:4000/pdf/generate', {
           chapterName,
           location,
           memberSize,
