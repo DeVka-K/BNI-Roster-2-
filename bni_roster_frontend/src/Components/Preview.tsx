@@ -33,7 +33,11 @@ const Preview: React.FC<PreviewProps> = ({
         <div className="page chapter-page">
           <div className="chapter-details">
             <div className='chapter-dome'>
-            <h2 className="chapter-title">{chapterName} </h2>
+            <div className="chapter-title">
+            <span className="bni">BNI</span>
+            <h2 className="chapter-name">{chapterName} </h2>
+            <span className="year">2024</span>
+            </div>
             {chapterLogo && (
               <img 
                 src={URL.createObjectURL(chapterLogo)} 
@@ -114,7 +118,6 @@ const Preview: React.FC<PreviewProps> = ({
           </div>
         </div>
       </div>
-      
       <div className="buttons">
         <button className="btn btn-secondary" onClick={onBack}>Back</button>
         <button className="btn btn-primary" onClick={onGeneratePDF}>Generate PDF</button>
@@ -134,7 +137,11 @@ const Preview: React.FC<PreviewProps> = ({
         }
 
         .chapter-dome{
-          margin:center;
+          display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12em;
         }
         .chapter-page {
           background-image: url('/Images/bni front page.png');
@@ -142,9 +149,11 @@ const Preview: React.FC<PreviewProps> = ({
           background-position: center;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: flex-start;
           align-items: center;
           padding: 40px;
+        
+          position: relative;
         }
         .chapter-details {
           // background-color: rgba(255, 255, 255, 0.9);
@@ -154,6 +163,11 @@ const Preview: React.FC<PreviewProps> = ({
           // max-width: 80%;
           width: 100%;
           max-width: 800px;
+          margin-top: 30%;
+          align-items: center;
+          flex-direction: column;
+          display: flex;
+          justify-content: center;
 
         }
         .chapter-title {
@@ -169,13 +183,31 @@ const Preview: React.FC<PreviewProps> = ({
           // left:440px;
           // // margin-bottom: 20px;
           // // font-size: 28px;
-          // font-size: 36px;
+          // font-size: 49px;
           text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
           font-size: 36px;
           margin-bottom: 20px;
           color: #cc0000;
+          line-height: 0.9;
         
         }
+        .bni {
+        font-size: 80px;
+        font-weight: 900;
+        color: #cc0000;
+        margin-bottom: 0px;
+        letter-spacing: 6%;
+        
+}
+        .chapter-name {
+         font-size: 34px;
+         color: #000000;
+         margin: 10px 0;
+         text-transform: uppercase;
+}
         .chapter-logo {
           // max-width: 150px;
           // max-height: 150px;
@@ -193,22 +225,36 @@ const Preview: React.FC<PreviewProps> = ({
           max-width: 150px;
           max-height: 150px;
         }
+          .year {
+  font-size: 58px;
+  font-weight: bold;
+  color: #808080;
+  margin-top: 0px;
+  letter-spacing: 6%;
+}
         .chapter-info {
           // background-color: rgba(255, 255, 255, 0.9);
           border-radius: 10px;
           overflow: hidden;
+          bottom: 40px;
+          width: 100%;
+          left: 0;
+          right: 0;
         }
           .info-row {
           position:static;
           display: flex;
           justify-content: space-between;
           margin-top: 600px;
+          margin-top: 150px;
+          padding: 0 40px;
         }
         .info-cell {
           flex: 1;
           padding: 15px;
           text-align: center;
           border-right: 1px solid #ddd;
+      
         }
         .info-cell:last-child {
           border-right: none;
@@ -257,7 +303,35 @@ const Preview: React.FC<PreviewProps> = ({
           padding: 15px;
           position: relative;
           align-items: center;
+          margin-right: 16em;
         }
+          .member-card::after {
+  content: '';
+  position: absolute;
+  top: 2em;
+  right: -16em; /* Position it at the edge of the margin */
+  bottom: -1em;
+  width: 15em; /* Width of the area with lines */
+  background-image: 
+    linear-gradient(to bottom, #ddd 1px, transparent 1px);
+  background-size: 100% 25%; /* Adjust this to control line spacing */
+  background-position: 0 0;
+  background-repeat: repeat-y;
+}
+  img.member-photo{
+  width: 100px;
+  height:100px;
+  border-radius:0px;
+  }
+img.company-photo{
+width: 60px;
+height: 60px;
+border-radius: 0px;
+margin-top: 25px;
+
+}
+
+
           .member-number {
           position: absolute;
           top: -10px;
@@ -266,7 +340,7 @@ const Preview: React.FC<PreviewProps> = ({
           height: 30px;
           background-color: #cc0000;
           color: white;
-          border-radius: 50%;
+          border-radius: 0%;
           display: flex;
           justify-content: center;
           align-items: center;
@@ -274,6 +348,7 @@ const Preview: React.FC<PreviewProps> = ({
         }
           .member-info {
           flex: 1;
+          
         }
          .member-info h4 {
           margin: 0 0 5px 0;
