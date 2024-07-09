@@ -115,37 +115,7 @@ const FormToPDF: React.FC = () => {
     }
   };
 
-  // const handleGeneratePDF = async () => {
-  //   const element = document.getElementById('preview-container');
-  //   if (element) {
-  //     const canvas = await html2canvas(element);
-  //     const data = canvas.toDataURL('image/png');
 
-  //     const pdf = new jsPDF();
-  //     const imgProperties = pdf.getImageProperties(data);
-  //     const pdfWidth = pdf.internal.pageSize.getWidth();
-  //     const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
-
-  //     pdf.addImage(data, 'PNG', 0, 0, pdfWidth, pdfHeight);
-  //     pdf.save('bni_roster.pdf');
-
-  //     // Send data to backend
-  //     try {
-  //       await axios.post('http://localhost:4000/pdf/generate', {
-  //         chapterName,
-  //         location,
-  //         memberSize,
-  //         regionalRank,
-  //         allIndiaRank,
-  //         globalRank,
-  //         members
-  //       });
-  //       console.log('PDF data sent to backend');
-  //     } catch (error) {
-  //       console.error('Error sending PDF data to backend:', error);
-  //     }
-  //   }
-  // };
   const handleGeneratePDF = async () => {
     const element = document.getElementById('preview-container');
     if (element) {

@@ -1,7 +1,7 @@
 // src/Components/Preview.tsx
 import React from 'react';
 import { MemberDetails } from '../types';
-
+import { generatePdf } from '../Services/api';
 interface PreviewProps {
   chapterName: string;
   location: string;
@@ -27,6 +27,50 @@ const Preview: React.FC<PreviewProps> = ({
   onBack, 
   onGeneratePDF 
 }) => {
+
+
+
+ const handleGeneratePDF = async () => {
+  try {
+    const pdfBlob = await generatePdf(
+      chapterName,
+      location,
+      memberSize,
+      regionalRank,
+      globalRank,
+      allIndiaRank,
+      members
+    );
+
+    const url = window.URL.createObjectURL(new Blob([pdfBlob]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'chapter.pdf');
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode?.removeChild(link);
+  } catch (error) {
+    console.error('Error generating PDF:', error);
+    // Handle error state or notification
+  }
+};
+
+
+
+
+ // Function to chunk members into groups of 6
+ const chunkMembers = (members: MemberDetails[], size: number) => {
+  return Array.from({ length: Math.ceil(members.length / size) }, (_, i) =>
+    members.slice(i * size, i * size + size)
+  );
+};
+
+
+const memberChunks = chunkMembers(members, 6);
+
+
+
+
   return (
     <div className="container">
       <div id="preview-container">
@@ -46,17 +90,7 @@ const Preview: React.FC<PreviewProps> = ({
               />
             )}
             </div>
-            {/* <table className="chapter-table">
-              <tbody>
-                <tr><th></th><td>{location}</td></tr>
-                <tr><th></th><td>{memberSize}</td></tr>
-                <tr><th></th><td>{regionalRank}</td></tr>
-                <tr><th></th><td>{allIndiaRank}</td></tr>
-                <tr><th></th><td>{globalRank}</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div> */}
+           
         <div className="chapter-info">
               <div className="info-row">
                 <div className="info-cell location">
@@ -84,18 +118,20 @@ const Preview: React.FC<PreviewProps> = ({
           </div>
         </div>
 
-        <div className="page members-page">
-          <h3 className="members-title">Members</h3>
-          <div className="members-list">
-          {members.map((member, index) => (
+   
+          {memberChunks.map((chunk, pageIndex) => (
+          <div key={pageIndex} className="page members-page">
+            {pageIndex === 0 && <h3 className="members-title">Members</h3>}
+            <div className="members-list">
+          {chunk.map((member, index) => (
               <div key={member.id} className="member-card">
-                <div className="member-number">{index + 1}</div>
+                <div className="member-number">{pageIndex *6 + index + 1}</div>
                 <div className="member-info">
-                  <h4>{member.name}</h4>
-                  <p>{member.company}</p>
-                  <p>{member.phone}</p>
-                  <p>{member.email}</p>
-                  <p><strong>{member.category}</strong></p>
+                  <h4 className='name'>{member.name}</h4>
+                  <p className='company'>{member.company}</p>
+                  <p className='phone'>{member.phone}</p>
+                  <p className='email'>{member.email}</p>
+                  <p className='category'><strong>{member.category}</strong></p>
                 </div>
                 <div className="member-photos">
                   {member.companyPhoto && (
@@ -112,15 +148,18 @@ const Preview: React.FC<PreviewProps> = ({
                       className="member-photo"
                     />
                   )}
+                  
                 </div>
               </div>
             ))}
+            
           </div>
         </div>
+          ))}
       </div>
       <div className="buttons">
         <button className="btn btn-secondary" onClick={onBack}>Back</button>
-        <button className="btn btn-primary" onClick={onGeneratePDF}>Generate PDF</button>
+        <button className="btn btn-primary" onClick={handleGeneratePDF}>Generate PDF</button>
       </div>
 
       <style>{`
@@ -134,8 +173,11 @@ const Preview: React.FC<PreviewProps> = ({
           background: white;
           box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
           overflow: hidden;
+          page-break-after: always;
         }
-
+.members-page {
+          page-break-after: always;
+        }
         .chapter-dome{
           display: flex;
   flex-direction: column;
@@ -195,7 +237,7 @@ const Preview: React.FC<PreviewProps> = ({
         
         }
         .bni {
-        font-size: 80px;
+        font-size: 90px;
         font-weight: 900;
         color: #cc0000;
         margin-bottom: 0px;
@@ -226,11 +268,11 @@ const Preview: React.FC<PreviewProps> = ({
           max-height: 150px;
         }
           .year {
-  font-size: 58px;
+  font-size: 60px;
   font-weight: bold;
   color: #808080;
   margin-top: 0px;
-  letter-spacing: 6%;
+  letter-spacing: 5px;
 }
         .chapter-info {
           // background-color: rgba(255, 255, 255, 0.9);
@@ -260,7 +302,8 @@ const Preview: React.FC<PreviewProps> = ({
           border-right: none;
         }
         .info-cell h3 {
-          font-size: 24px;
+          font-size: 33px;
+          font-weight: 700;
           margin: 0;
           color: #cc0000;
         }
@@ -284,6 +327,8 @@ const Preview: React.FC<PreviewProps> = ({
           
            background-size: cover;
            position: relative;
+           display: flex;
+           flex-direction: column;
         }
         .members-title {
           text-align: center;
@@ -294,16 +339,18 @@ const Preview: React.FC<PreviewProps> = ({
           // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
           gap: 20px;
            flex-direction: column;
+           background-color:white;
         }
         .member-card {
            display: flex;
           background-color: white;
-          border: 1px solid #ddd;
+          // border: 1px solid #ddd;
           border-radius: 5px;
           padding: 15px;
           position: relative;
           align-items: center;
           margin-right: 16em;
+          break-inside: avoid;
         }
           .member-card::after {
   content: '';
@@ -334,8 +381,8 @@ margin-top: 25px;
 
           .member-number {
           position: absolute;
-          top: -10px;
-          left: -10px;
+          top: -1px;
+          left: -1px;
           width: 30px;
           height: 30px;
           background-color: #cc0000;
@@ -348,21 +395,49 @@ margin-top: 25px;
         }
           .member-info {
           flex: 1;
+          padding-left:28px;
           
         }
          .member-info h4 {
           margin: 0 0 5px 0;
           color: #333;
+          font-weight: 700;
         }
+          .h4 h4{
+          font-sie:1.2rem;
+          
+          }
+
         .member-info p {
           margin: 2px 0;
           color: #666;
+          font-weight: 500;
         }
         .member-photos {
           display: flex;
           gap: 10px;
-          
         }
+        .member-info p.category {
+  color: #cc0000; /* Red color for category */
+  font-weight: bold;
+  font-size: 15px;
+}
+.member-info h4.name{
+font-size: 16px;
+}
+.member-info p.company{
+color: rgba(0, 0, 0, 0.8);
+font-size: 15px;
+}
+.member-info p.phone{
+color: rgba(0, 0, 0, 0.8);
+font-size: 15px;
+}
+.member-info p.email{
+color: rgba(0, 0, 0, 0.8);
+font-size: 15px;
+
+}
         .member-photo, .company-photo {
           width: 60px;
           height: 60px;
