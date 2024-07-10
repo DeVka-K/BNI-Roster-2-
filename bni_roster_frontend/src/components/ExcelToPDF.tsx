@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, Form } from 'react-bootstrap';
+import axios from 'axios';
 
 const ExcelToPDF: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [step, setStep] = useState<number>(1);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const maxFileSizeMB = 5; // Maximum file size in MB
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,19 +45,34 @@ const ExcelToPDF: React.FC = () => {
       }
     }
   };
+  const handlePreview = async () => {
+    if (!file) return;
 
-  const handlePreview = () => {
-    // Placeholder for preview logic
-    // In a real implementation, this would send the file to the backend for conversion
-    setPreviewUrl('path_to_preview_image.jpg');
-    setStep(3);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axios.post('http://localhost:4000/api/excel-to-pdf/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      setPreviewUrl(response.data.previewUrl);
+      setDownloadUrl(response.data.downloadUrl);
+      setStep(3);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Error uploading file. Please try again.');
+    }
   };
 
   const handleDownload = () => {
-    // Placeholder for download logic
-    // In a real implementation, this would trigger the PDF download
-    alert('Downloading PDF...');
+    if (downloadUrl) {
+      window.open(downloadUrl, '_blank');
+    }
   };
+
 
   return (
     <Container className="mt-5">
@@ -102,38 +119,37 @@ const ExcelToPDF: React.FC = () => {
   </Row>
 
   {previewUrl && (
-    <Row className="justify-content-center mt-4">
-      <Col xs={12} md={8}>
-        <h5>PREVIEW</h5>
-        <img src={previewUrl} alt="PDF Preview" className="img-fluid border" />
-      </Col>
-    </Row>
-  )}
+        <Row className="justify-content-center mt-4">
+          <Col xs={12} md={8}>
+            <h5>PREVIEW</h5>
+            <iframe src={previewUrl} width="100%" height="500px" title="PDF Preview" />
+          </Col>
+        </Row>
+      )}
 
-  <Row className="justify-content-center mt-4">
-    <Col xs={12} md={4} className="text-center">
-      <Button
-        variant="success"
-        size="lg"
-        onClick={handlePreview}
-        disabled={!file || step >= 3}
-      >
-        Preview
-      </Button>
-    </Col>
-    <Col xs={12} md={4} className="text-center">
-      <Button
-        variant="danger"
-        size="lg"
-        onClick={handleDownload}
-        disabled={step < 3}
-      >
-        Download as PDF <i className="fas fa-download"></i>
-      </Button>
-    </Col>
-  </Row>
-</Container>
-
+      <Row className="justify-content-center mt-4">
+        <Col xs={12} md={4} className="text-center">
+          <Button
+            variant="success"
+            size="lg"
+            onClick={handlePreview}
+            disabled={!file || step >= 3}
+          >
+            Preview
+          </Button>
+        </Col>
+        <Col xs={12} md={4} className="text-center">
+          <Button
+            variant="danger"
+            size="lg"
+            onClick={handleDownload}
+            disabled={step < 3}
+          >
+            Download as PDF <i className="fas fa-download"></i>
+          </Button>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
