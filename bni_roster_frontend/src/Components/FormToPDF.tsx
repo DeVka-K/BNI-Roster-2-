@@ -117,38 +117,65 @@ const FormToPDF: React.FC = () => {
 
 
   const handleGeneratePDF = async () => {
-    const element = document.getElementById('preview-container');
-    if (element) {
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pages = element.querySelectorAll('.page');
+    // const element = document.getElementById('preview-container');
+    // if (element) {
+    //   const pdf = new jsPDF('p', 'mm', 'a4');
+    //   const pages = element.querySelectorAll('.page');
       
-      for (let i = 0; i < pages.length; i++) {
-        const page = pages[i] as HTMLElement;
-        const canvas = await html2canvas(page, {scale: 2});
-        const imgData = canvas.toDataURL('image/png');
+    //   for (let i = 0; i < pages.length; i++) {
+    //     const page = pages[i] as HTMLElement;
+    //     const canvas = await html2canvas(page, {scale: 2});
+    //     const imgData = canvas.toDataURL('image/png');
         
-        if (i > 0) pdf.addPage();
+    //     if (i > 0) pdf.addPage();
         
-        pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+    //     pdf.addImage(imgData, 'PNG', 0, 0, 210, 297);
+    //   }
+      
+    //   pdf.save('bni_roster.pdf');
+    const formData = new FormData();
+    formData.append('chapterName', chapterName);
+    formData.append('location', location);
+    formData.append('memberSize', memberSize);
+    formData.append('regionalRank', regionalRank);
+    formData.append('allIndiaRank', allIndiaRank);
+    formData.append('globalRank', globalRank);
+    formData.append('chapterLogo', chapterLogo!);
+
+    members.forEach((member, index) => {
+      formData.append(`members[${index}][name]`, member.name);
+      formData.append(`members[${index}][company]`, member.company);
+      formData.append(`members[${index}][email]`, member.email);
+      formData.append(`members[${index}][phone]`, member.phone);
+      formData.append(`members[${index}][category]`, member.category);
+      if (member.memberPhoto) {
+        formData.append(`members[${index}][memberPhoto]`, member.memberPhoto);
       }
-      
-      pdf.save('bni_roster.pdf');
-  
+      if (member.companyPhoto) {
+        formData.append(`members[${index}][companyPhoto]`, member.companyPhoto);
+      }
+    });
+    
+
       // Send data to backend
       try {
-        await axios.post('http://localhost:4000/pdf/generate', {
-          chapterName,
-          location,
-          memberSize,
-          regionalRank,
-          allIndiaRank,
-          globalRank,
-          members
+        await axios.post('http://localhost:4000/pdf/generate',formData, {
+
+          // chapterName,
+          // location,
+          // memberSize,
+          // regionalRank,
+          // allIndiaRank,
+          // globalRank,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+          
         });
         console.log('PDF data sent to backend');
       } catch (error) {
         console.error('Error sending PDF data to backend:', error);
-      }
+      
     }
   };
 
