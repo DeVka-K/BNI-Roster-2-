@@ -133,49 +133,49 @@ const FormToPDF: React.FC = () => {
     //   }
       
     //   pdf.save('bni_roster.pdf');
-    const formData = new FormData();
-    formData.append('chapterName', chapterName);
-    formData.append('location', location);
-    formData.append('memberSize', memberSize);
-    formData.append('regionalRank', regionalRank);
-    formData.append('allIndiaRank', allIndiaRank);
-    formData.append('globalRank', globalRank);
-    formData.append('chapterLogo', chapterLogo!);
-
-    members.forEach((member, index) => {
-      formData.append(`members[${index}][name]`, member.name);
-      formData.append(`members[${index}][company]`, member.company);
-      formData.append(`members[${index}][email]`, member.email);
-      formData.append(`members[${index}][phone]`, member.phone);
-      formData.append(`members[${index}][category]`, member.category);
-      if (member.memberPhoto) {
-        formData.append(`members[${index}][memberPhoto]`, member.memberPhoto);
-      }
-      if (member.companyPhoto) {
-        formData.append(`members[${index}][companyPhoto]`, member.companyPhoto);
-      }
-    });
-    
-
-      // Send data to backend
-      try {
-        await axios.post('http://localhost:4000/pdf/generate',formData, {
-
-          // chapterName,
-          // location,
-          // memberSize,
-          // regionalRank,
-          // allIndiaRank,
-          // globalRank,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          
-        });
-        console.log('PDF data sent to backend');
-      } catch (error) {
-        console.error('Error sending PDF data to backend:', error);
+    try {
+      const formData = new FormData();
+      formData.append('chapterName', chapterName);
+      formData.append('location', location);
+      formData.append('memberSize', memberSize);
+      formData.append('regionalRank', regionalRank);
+      formData.append('allIndiaRank', allIndiaRank);
+      formData.append('globalRank', globalRank);
       
+      if (chapterLogo) {
+        formData.append('chapterLogo', chapterLogo);
+      }
+  
+      members.forEach((member, index) => {
+        formData.append(`members[${index}][name]`, member.name);
+        formData.append(`members[${index}][company]`, member.company);
+        formData.append(`members[${index}][email]`, member.email);
+        formData.append(`members[${index}][phone]`, member.phone);
+        formData.append(`members[${index}][category]`, member.category);
+        if (member.memberPhoto) {
+          formData.append(`members[${index}][memberPhoto]`, member.memberPhoto);
+        }
+        if (member.companyPhoto) {
+          formData.append(`members[${index}][companyPhoto]`, member.companyPhoto);
+        }
+      });
+  
+      const response = await axios.post('http://localhost:4000/pdf/generate', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        responseType: 'blob',
+      });
+      
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'bni_roster.pdf');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode?.removeChild(link);
+    } catch (error) {
+      console.error('Error sending PDF data to backend:', error);
     }
   };
 
