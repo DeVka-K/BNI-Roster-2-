@@ -22,10 +22,10 @@ const App: React.FC = () => {
   return (
     <MDBNavbar expand='lg' light bgColor='light'>
       <MDBContainer fluid>
-        <MDBNavbarBrand href='#' >
+        <MDBNavbarBrand href='#' className='ms-5' >
             <img
               src='/Images/bnilogo2.png'
-              height='30'
+              height='35'
               alt=''
               loading='lazy'
             />
@@ -40,7 +40,7 @@ const App: React.FC = () => {
         <MDBCollapse navbar open={openNavSecond } >
         {/*  */}
           <MDBNavbarNav right fullWidth={false}>
-            <MDBNavbarItem style={{display:'flex', flexDirection:'column',alignItems:'center',paddingLeft:'52rem'}} >
+            <MDBNavbarItem style={{display:'flex', flexDirection:'column',alignItems:'center',paddingLeft:'48rem'}} >
               <MDBNavbarLink active aria-current='page' href='#' className='me-4'>
                 Home
               </MDBNavbarLink>

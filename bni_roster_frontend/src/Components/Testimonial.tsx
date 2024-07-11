@@ -41,7 +41,7 @@ const Testimonial: React.FC = () => {
 
   const sectionStyle: React.CSSProperties = {
     color: '#000',
-    backgroundColor: '#f3f2f2'
+    backgroundColor: '#ffffff'
   };
 
   const cardStyle: React.CSSProperties = {
