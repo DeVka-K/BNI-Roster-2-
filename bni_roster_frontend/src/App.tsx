@@ -12,6 +12,7 @@ import JsontoPdf from './Components/JsontoPdf';
 import ExcelToPDF from './Components/ExcelToPDF';
 
 import ApiDocumentation from './Components/ApiDocumentation';
+import PricingSection from './Components/PricingSection';
 
 const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const App: React.FC = () => {
       <Route path="/csv-to-pdf" element={<CsvToPdf/>}/>
       <Route path="/form-to-pdf" element={<FormToPDF/>}/>
         <Route path="/ApiDocumentation"    element={<ApiDocumentation/>}/>
+        <Route path="/PricingSection"    element={<PricingSection/>}/>
       </Routes>
       <Footer></Footer>
     </div>

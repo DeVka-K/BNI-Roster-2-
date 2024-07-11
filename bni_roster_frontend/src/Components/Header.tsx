@@ -52,17 +52,17 @@ const App: React.FC = () => {
                   Products
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
-                  <MDBDropdownItem  link>Excel To Pdf</MDBDropdownItem>
-                  <MDBDropdownItem link>Form To Pdf</MDBDropdownItem>
-                  <MDBDropdownItem link>Csv To Pdf</MDBDropdownItem>
-                  <MDBDropdownItem link>Json To Pdf</MDBDropdownItem>
+                  <MDBDropdownItem  link href='/excel-to-pdf'>Excel To Pdf</MDBDropdownItem>
+                  <MDBDropdownItem link href='/form-to-pdf'>Form To Pdf</MDBDropdownItem>
+                  <MDBDropdownItem link href='/csv-to-pdf'>Csv To Pdf</MDBDropdownItem>
+                  <MDBDropdownItem link href='/json-to-pdf'>Json To Pdf</MDBDropdownItem>
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavbarItem>
             <MDBNavbarItem  className='me-4' >
-              <MDBNavbarLink href='#'>Pricing</MDBNavbarLink>
+              <MDBNavbarLink href='/PricingSection'>Pricing</MDBNavbarLink>
             </MDBNavbarItem>
-            <MDBNavbarLink tag='a' className='nav-link me-4' role='button'>
+            <MDBNavbarLink tag='a' className='nav-link me-4' role='button' href='/ApiDocumentation'>
             Api Documentation
                 </MDBNavbarLink>
             <MDBNavbarItem style={{paddingLeft:'15rem'}}>
