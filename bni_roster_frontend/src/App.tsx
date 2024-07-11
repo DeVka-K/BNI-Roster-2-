@@ -5,6 +5,7 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import { Route,Routes } from 'react-router-dom';
 import JsontoPdf from './Components/JsontoPdf';
+import ApiDocumentation from './Components/ApiDocumentation';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
       <Route path="/" element={<HomePage/>}/>
         <Route path="/json-to-pdf"    element={<JsontoPdf/>}/>
+        <Route path="/ApiDocumentation"    element={<ApiDocumentation/>}/>
       </Routes>
 
 
