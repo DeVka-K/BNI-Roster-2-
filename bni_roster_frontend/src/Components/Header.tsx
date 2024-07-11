@@ -9,6 +9,10 @@ import {
   MDBNavbarLink,
   MDBIcon,
   MDBBtn,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
   MDBCollapse
 } from 'mdb-react-ui-kit';
 
@@ -21,7 +25,7 @@ const App: React.FC = () => {
         {/* <MDBNavbarBrand href='#'>Navbar</MDBNavbarBrand> */}
         <MDBNavbarBrand href='#'>
             <img
-              src='https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.webp'
+              src='/Images/bnilogo2.png'
               height='30'
               alt=''
               loading='lazy'
@@ -42,14 +46,25 @@ const App: React.FC = () => {
               </MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
-              <MDBNavbarLink href='#'>Features</MDBNavbarLink>
+              <MDBDropdown>
+                <MDBDropdownToggle tag='a' className='nav-link' role='button'>
+                  Products
+                </MDBDropdownToggle>
+                <MDBDropdownMenu>
+                  <MDBDropdownItem link>Excel To Pdf</MDBDropdownItem>
+                  <MDBDropdownItem link>Form To Pdf</MDBDropdownItem>
+                  <MDBDropdownItem link>Csv To Pdf</MDBDropdownItem>
+                  <MDBDropdownItem link>Json To Pdf</MDBDropdownItem>
+                </MDBDropdownMenu>
+              </MDBDropdown>
             </MDBNavbarItem>
+          
             <MDBNavbarItem>
               <MDBNavbarLink href='#'>Pricing</MDBNavbarLink>
             </MDBNavbarItem>
             <MDBNavbarItem>
             <MDBBtn outline color="success" className='me-2' type='button'>
-          Main button
+          Sign Up
         </MDBBtn>
               {/* <MDBNavbarLink disabled href='#' tabIndex={-1} aria-disabled='true'>
                 Disabled
