@@ -11,6 +11,7 @@ import Footer from "./Components/Footer";
 import JsontoPdf from './Components/JsontoPdf';
 import ExcelToPDF from './Components/ExcelToPDF';
 
+import ApiDocumentation from './Components/ApiDocumentation';
 
 const App: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ const App: React.FC = () => {
         <Route path="/json-to-pdf"    element={<JsontoPdf/>}/>
       <Route path="/csv-to-pdf" element={<CsvToPdf/>}/>
       <Route path="/form-to-pdf" element={<FormToPDF/>}/>
+        <Route path="/ApiDocumentation"    element={<ApiDocumentation/>}/>
       </Routes>
       <Footer></Footer>
     </div>
