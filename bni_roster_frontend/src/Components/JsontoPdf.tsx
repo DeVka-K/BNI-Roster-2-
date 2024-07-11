@@ -55,7 +55,7 @@ const JsontoPdf: React.FC = () => {
       formData.append('file', file);
   
       try {
-        const response = await axios.post('http://localhost:4000/api/json-to-pdf/upload', formData);
+        const response = await axios.post('http://localhost:4000/json/upload', formData);
         console.log('API Response:', response.data);
         setPreviewUrl(response.data.previewUrl);
         setDownloadUrl(response.data.downloadUrl);

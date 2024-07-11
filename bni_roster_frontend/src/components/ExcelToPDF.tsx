@@ -52,7 +52,7 @@ const ExcelToPDF: React.FC = () => {
     formData.append('file', file);
 
     try {
-      const response = await axios.post('http://localhost:4000/api/excel-to-pdf/upload', formData, {
+      const response = await axios.post('http://localhost:4000/excel/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
