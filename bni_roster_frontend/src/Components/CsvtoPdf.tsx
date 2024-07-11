@@ -228,6 +228,28 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { FaFileAlt, FaDownload } from 'react-icons/fa';
@@ -387,3 +409,26 @@ const PDFGeneratorPage: React.FC = () => {
 };
  
 export default PDFGeneratorPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
