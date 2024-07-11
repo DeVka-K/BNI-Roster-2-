@@ -1,12 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { Container, Row, Col, Button, Alert, Form } from 'react-bootstrap';
 import { FaFileUpload, FaEye, FaDownload } from 'react-icons/fa';
+import axios from 'axios';
 
 const JsontoPdf: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<number>(1);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,19 +45,38 @@ const JsontoPdf: React.FC = () => {
     }
   };
 
+  const handleBrowseClick = () => {
+    fileInputRef.current?.click();
+  };
+
   const handlePreview = async () => {
-    // Placeholder for preview logic
-    setPreviewUrl('placeholder-preview-url');
-    setStep(3);
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      try {
+        const response = await axios.post('http://localhost:4000/api/json-to-pdf/upload', formData);
+        console.log('API Response:', response.data);
+        setPreviewUrl(response.data.previewUrl);
+        setDownloadUrl(response.data.downloadUrl);
+        setStep(3);
+        window.open(response.data.previewUrl, '_blank');
+      } catch (error) {
+        console.error('Error generating preview:', error);
+        if (axios.isAxiosError(error)) {
+          console.error('Axios error details:', error.response?.data);
+          setError(`Failed to generate PDF preview: ${error.response?.data?.message || error.message}`);
+        } else {
+          setError('An unexpected error occurred');
+        }
+      }
+    }
   };
 
   const handleDownload = () => {
-    // Placeholder for download logic
-    console.log('Downloading PDF...');
-  };
-
-  const handleBrowseClick = () => {
-    fileInputRef.current?.click();
+    if (downloadUrl) {
+      window.open(downloadUrl, '_blank');
+    }
   };
 
   return (
@@ -64,7 +85,6 @@ const JsontoPdf: React.FC = () => {
         <span className="text-secondary">JSON</span> TO <span className="text-danger">PDF</span>
       </h1>
 
-      {/* Timeline */}
       <Row className="mb-5">
         <Col>
           <div className="d-flex justify-content-between">
@@ -82,7 +102,6 @@ const JsontoPdf: React.FC = () => {
         </Col>
       </Row>
 
-      {/* File Upload Area */}
       <Row className="mb-4">
         <Col>
           <div
@@ -112,36 +131,22 @@ const JsontoPdf: React.FC = () => {
         </Col>
       </Row>
 
-      {/* Preview Area */}
-      {step >= 2 && (
-        <Row className="mb-4">
-          <Col>
-            <div className="preview-area p-3 border rounded">
-              <h5 className="mb-3">Preview</h5>
-              {/* Placeholder for actual preview content */}
-              <img src="/path-to-preview-image.jpg" alt="PDF Preview" className="img-fluid" />
-            </div>
-          </Col>
-        </Row>
-      )}
-
-      {/* Action Buttons */}
       <Row className="mb-4">
         <Col className="d-flex justify-content-center">
           <Button
             variant="success"
             onClick={handlePreview}
-            disabled={!file || step >= 3}
+            disabled={!file}
             className="me-3"
           >
-            <FaEye className="me-2" /> Preview
+            <FaEye className="me-2" /> Preview PDF
           </Button>
           <Button
             variant="danger"
             onClick={handleDownload}
-            disabled={step < 3}
+            disabled={!downloadUrl}
           >
-            <FaDownload className="me-2" /> Download as PDF
+            <FaDownload className="me-2" /> Download PDF
           </Button>
         </Col>
       </Row>
@@ -150,3 +155,28 @@ const JsontoPdf: React.FC = () => {
 };
 
 export default JsontoPdf;
+
+  // const handleDownload = async () => {
+  //   if (file) {
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+
+  //     try {
+  //       const response = await axios.post('/api/json-to-pdf/upload', formData, {
+  //         headers: {
+  //           'Content-Type': 'multipart/form-data',
+  //         },
+  //         responseType: 'blob',
+  //       });
+
+  //       const url = window.URL.createObjectURL(new Blob([response.data]));
+  //       const link = document.createElement('a');
+  //       link.href = url;
+  //       link.setAttribute('download', 'output.pdf');
+  //       document.body.appendChild(link);
+  //       link.click();
+  //     } catch (error) {
+  //       setError('Failed to download PDF. Please try again.');
+  //     }
+  //   }
+  // };
