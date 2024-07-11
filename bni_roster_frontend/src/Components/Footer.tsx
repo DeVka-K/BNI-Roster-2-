@@ -6,33 +6,33 @@ const App: React.FC = () => {
     <MDBFooter bgColor='light' className='text-center text-lg-start text-muted'>
       <section className='d-flex justify-content-center justify-content-lg-between p-4 border-bottom'>
         <div className='me-5 d-none d-lg-block'>
-          <span>Get connected with us on social networks:</span>
+          <span  style={{ color: '#000000'}}>Get connected with us on social networks:</span>
         </div>
 
-        <div>
-          <a href='#' className='me-4 text-reset'>
-            <MDBIcon fab icon="facebook-f" />
-          </a>
-          <a href='#' className='me-4 text-reset'>
-            <MDBIcon fab icon="twitter" />
-          </a>
-          <a href='#' className='me-4 text-reset'>
-            <MDBIcon fab icon="google" />
-          </a>
-          <a href='#' className='me-4 text-reset'>
-            <MDBIcon fab icon="instagram" />
-          </a>
-          <a href='#' className='me-4 text-reset'>
-            <MDBIcon fab icon="linkedin" />
-          </a>
-          <a href='#' className='me-4 text-reset'>
-            <MDBIcon fab icon="github" />
-          </a>
-        </div>
+<div>
+      <a href='#' className='me-4 text-reset'>
+        <MDBIcon fab icon="facebook-f" style={{ color: '#3b5998' }} />
+      </a>
+      <a href='#' className='me-4 text-reset'>
+        <MDBIcon fab icon="twitter" style={{ color: '#1da1f2' }} />
+      </a>
+      <a href='#' className='me-4 text-reset'>
+        <MDBIcon fab icon="google" style={{ color: '#db4437' }} />
+      </a>
+      <a href='#' className='me-4 text-reset'>
+        <MDBIcon fab icon="instagram" style={{ color: '#e1306c' }} />
+      </a>
+      <a href='#' className='me-4 text-reset'>
+        <MDBIcon fab icon="linkedin" style={{ color: '#0077b5' }} />
+      </a>
+      <a href='#' className='me-4 text-reset'>
+        <MDBIcon fab icon="github" style={{ color: '#333' }} />
+      </a>
+    </div>
       </section>
 
       <section className=''>
-        <MDBContainer className='text-center text-md-start mt-5'>
+        <MDBContainer className='text-center text-md-start mt-5' style={{ color: '#000000' }}>
           <MDBRow className='mt-3'>
             <MDBCol md="3" lg="4" xl="3" className='mx-auto mb-4'>
               <h6 className='text-uppercase fw-bold mb-4'>

@@ -22,11 +22,10 @@ const App: React.FC = () => {
   return (
     <MDBNavbar expand='lg' light bgColor='light'>
       <MDBContainer fluid>
-        {/* <MDBNavbarBrand href='#'>Navbar</MDBNavbarBrand> */}
-        <MDBNavbarBrand href='#'>
+        <MDBNavbarBrand href='#' className='ms-5' >
             <img
               src='/Images/bnilogo2.png'
-              height='30'
+              height='35'
               alt=''
               loading='lazy'
             />
@@ -38,16 +37,18 @@ const App: React.FC = () => {
         >
           <MDBIcon icon='bars' fas />
         </MDBNavbarToggler>
-        <MDBCollapse navbar open={openNavSecond}>
-          <MDBNavbarNav>
-            <MDBNavbarItem>
-              <MDBNavbarLink active aria-current='page' href='#'>
+        <MDBCollapse navbar open={openNavSecond } >
+        {/*  */}
+          <MDBNavbarNav right fullWidth={false}>
+            <MDBNavbarItem style={{display:'flex', flexDirection:'column',alignItems:'center',paddingLeft:'48rem'}} >
+              <MDBNavbarLink active aria-current='page' href='#' className='me-4'>
                 Home
               </MDBNavbarLink>
             </MDBNavbarItem>
-            <MDBNavbarItem>
-              <MDBDropdown>
-                <MDBDropdownToggle tag='a' className='nav-link' role='button'>
+            <MDBNavbarItem >
+              <MDBDropdown >
+              
+                <MDBDropdownToggle tag='a' className='nav-link me-4' role='button'>
                   Products
                 </MDBDropdownToggle>
                 <MDBDropdownMenu>
@@ -58,13 +59,18 @@ const App: React.FC = () => {
                 </MDBDropdownMenu>
               </MDBDropdown>
             </MDBNavbarItem>
-          
-            <MDBNavbarItem>
+            <MDBNavbarItem  className='me-4' >
               <MDBNavbarLink href='#'>Pricing</MDBNavbarLink>
             </MDBNavbarItem>
-            <MDBNavbarItem>
-            <MDBBtn outline color="success" className='me-2' type='button'>
+            <MDBNavbarLink tag='a' className='nav-link me-4' role='button'>
+            Api Documentation
+                </MDBNavbarLink>
+            <MDBNavbarItem style={{paddingLeft:'15rem'}}>
+            <MDBBtn  outline color="success" className='me-5' type='button'  >
           Sign Up
+        </MDBBtn>
+        <MDBBtn outline color="success"  type='button'>
+          Log In
         </MDBBtn>
               {/* <MDBNavbarLink disabled href='#' tabIndex={-1} aria-disabled='true'>
                 Disabled
