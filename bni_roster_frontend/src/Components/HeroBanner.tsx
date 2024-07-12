@@ -1,5 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'animate.css/animate.min.css'; // Import Animate.css
  
 const HeroBanner: React.FC = () => {
   const heroBannerStyle: React.CSSProperties = {
@@ -28,14 +30,18 @@ const HeroBanner: React.FC = () => {
 <Container>
 <Row className="align-items-center">
 <Col md={6}>
-<h1 style={headingStyle}>
+<h1 className="animate__animated animate__fadeInLeft" style={headingStyle}>
               Boost your building process with <span className="text-success">BNI Generator</span>
 </h1>
-{/* <p style={paragraphStyle}>Get the career you deserve.</p>
-<Button variant="success" style={buttonStyle}>Learn More</Button> */}
+<p className="animate__animated animate__fadeInLeft animate__delay-1s" style={paragraphStyle}>
+              Get the career you deserve.
+</p>
+<Button variant="success" className="animate__animated animate__fadeInLeft animate__delay-2s" style={buttonStyle}>
+              Learn More
+</Button>
 </Col>
 <Col md={6}>
-<img src="/Images/zone_landing.webp" alt="Hero Banner" className="img-fluid" />
+<img src="/Images/zone_landing.webp" alt="Hero Banner" className="img-fluid animate__animated animate__fadeInRight" />
 </Col>
 </Row>
 </Container>

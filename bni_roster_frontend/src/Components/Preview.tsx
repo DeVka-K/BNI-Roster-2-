@@ -39,7 +39,8 @@ const Preview: React.FC<PreviewProps> = ({
         allIndiaRank,
         globalRank,
         chapterLogo!, // Add this line
-        members
+        members 
+        
       );
 
       const url = window.URL.createObjectURL(new Blob([pdfBlob]));

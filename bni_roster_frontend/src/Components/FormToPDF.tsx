@@ -59,18 +59,30 @@ const FormToPDF: React.FC = () => {
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>, memberId?: number, photoType?: 'memberPhoto' | 'companyPhoto') => {
     const file = event.target.files?.[0];
-    if (file && validateFile(file)) {
-      if (photoType === 'memberPhoto' && memberId !== undefined) {
-        setMembers(members.map(member =>
+  
+    if (!file) return; // Exit early if no file is selected
+  
+    if (!validateFile(file)) {
+      // Handle invalid file types or sizes here
+      console.error('Invalid file type or size');
+      return;
+    }
+  
+    // Update state based on photoType and memberId
+    if (photoType === 'memberPhoto' && memberId !== undefined) {
+      setMembers((prevMembers) =>
+        prevMembers.map((member) =>
           member.id === memberId ? { ...member, memberPhoto: file } : member
-        ));
-      } else if (photoType === 'companyPhoto' && memberId !== undefined) {
-        setMembers(members.map(member =>
+        )
+      );
+    } else if (photoType === 'companyPhoto' && memberId !== undefined) {
+      setMembers((prevMembers) =>
+        prevMembers.map((member) =>
           member.id === memberId ? { ...member, companyPhoto: file } : member
-        ));
-      } else {
-        setChapterLogo(file);
-      }
+        )
+      );
+    } else {
+      setChapterLogo(file); // If no memberId or photoType specified, update chapterLogo
     }
   };
 
